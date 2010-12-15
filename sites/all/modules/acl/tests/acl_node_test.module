@@ -1,0 +1,124 @@
+<?php
+// $Id: acl_node_test.module,v 1.1 2010/07/11 22:15:15 salvis Exp $
+
+/**
+ * @file
+ * Dummy module implementing node related hooks to test API interaction with
+ * the Node module.
+ */
+
+/**
+ * Implements hook_node_grants().
+ */
+function acl_node_test_node_grants($account, $op) {
+  // Give everyone full grants so we don't break other node tests.
+  // Our node access tests asserts three realms of access.
+  // See testGrantAlter().
+  return array(
+    'test_article_realm' => array(1),
+    'test_page_realm' => array(1),
+    'test_alter_realm' => array(2),
+  );
+}
+
+/**
+ * Implements hook_node_access_records().
+ * Implicit View by All is allowed
+ */
+function acl_node_test_node_access_records($node) {
+  $grants = array();
+  if ($node->type == 'article') {
+    // Create grant in arbitrary article_realm for article nodes.
+    $grants[] = array(
+      'realm' => 'test_article_realm',
+      'gid' => 1,
+      'grant_view' => 1,
+      'grant_update' => 0,
+      'grant_delete' => 0,
+      'priority' => 0,
+    );
+  }
+  elseif ($node->type == 'page') {
+    // Create grant in arbitrary page_realm for page nodes.
+    $grants[] = array(
+      'realm' => 'test_page_realm',
+      'gid' => 1,
+      'grant_view' => 1,
+      'grant_update' => 0,
+      'grant_delete' => 0,
+      'priority' => 0,
+    );
+  }
+  return $grants;
+}
+
+/**
+ * Implements hook_node_access_records_alter().
+ */
+function acl_node_test_node_access_records_alter(&$grants, $node) {
+  if (!empty($grants)) {
+    foreach ($grants as $key => $grant) {
+      // Alter grant from test_page_realm to test_alter_realm and modify the gid.
+      if ($grant['realm'] == 'test_page_realm' && $node->promote) {
+        $grants[$key]['realm'] = 'test_alter_realm';
+        $grants[$key]['gid'] = 2;
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_node_grants_alter().
+ */
+function acl_node_test_node_grants_alter(&$grants, $account, $op) {
+  // Return an empty array of grants to prove that we can alter by reference.
+  $grants = array();
+}
+
+/**
+ * Implements hook_node_presave().
+ */
+function acl_node_test_node_presave($node) {
+  if ($node->title == 'testing_node_presave') {
+    // Sun, 19 Nov 1978 05:00:00 GMT
+    $node->created = 280299600;
+    // Drupal 1.0 release.
+    $node->changed = 979534800;
+  }
+}
+
+/**
+ * Helper function to create a new ACL through this module
+ */
+function acl_node_acl_create_new_acl($name) {
+  //should not be called acl_create_new_acl but acl_create_acl
+  acl_create_new_acl('acl_node_test', $name);
+}
+
+/**
+ * Helper function to delete an ACL through this module
+ */
+function acl_node_acl_delete_acl($acl_id) {
+  acl_delete_acl($acl_id);
+}
+
+/**
+ * Helper function to add an user
+ */
+function acl_node_acl_add_user($acl_id,$uid) {
+  acl_add_user($acl_id,$uid);
+}
+
+/**
+ * Helper function to remove an user
+ */
+function acl_node_acl_remove_user($acl_id,$uid) {
+  acl_remove_user($acl_id,$uid);
+}
+
+/**
+ * Helper function to get an ID of an ACL by it's name
+*/
+function acl_node_acl_get_id_by_name($acl_name) {
+  return $acl_id = acl_get_id_by_name('acl_node_test', $acl_name);
+}

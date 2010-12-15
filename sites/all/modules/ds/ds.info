@@ -1,0 +1,24 @@
+; $Id: ds.info,v 1.1.4.9 2010/12/09 21:50:28 swentel Exp $
+name = "Display suite"
+description = "Extend the display options for every entity type."
+core = "7.x"
+package = "Display suite"
+files[] = ds.module
+files[] = ds.install
+files[] = ds.registry.inc
+files[] = ds.field_ui.inc
+files[] = ds.fields.inc
+files[] = ds.view_modes.inc
+files[] = ds.views.inc
+files[] = entities/node/node.inc
+files[] = entities/node/node.theme.inc
+files[] = entities/user/user.inc
+files[] = entities/user/user.theme.inc
+files[] = entities/comment/comment.inc
+files[] = views/views_plugin_ds_entity_view.inc
+; Information added by drupal.org packaging script on 2010-12-10
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "ds"
+datestamp = "1291939897"
+

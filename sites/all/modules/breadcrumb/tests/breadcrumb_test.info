@@ -1,0 +1,15 @@
+; $Id: breadcrumb_test.info,v 1.1 2010/12/07 19:12:36 sun Exp $
+name = Breadcrumb testing
+description = Tests Breadcrumb module functionality. Do not enable.
+core = 7.x
+package = Testing
+hidden = TRUE
+dependencies[] = breadcrumb
+files[] = breadcrumb_test.module
+
+; Information added by drupal.org packaging script on 2010-12-08
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "breadcrumb"
+datestamp = "1291766897"
+

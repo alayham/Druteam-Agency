@@ -1,0 +1,54 @@
+<?php
+// $Id: xmlsitemap_taxonomy.install,v 1.7 2010/04/29 16:19:01 davereid Exp $
+
+/**
+ * @file
+ * Install and uninstall schema and functions for the xmlsitemap_taxonomy module.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function xmlsitemap_taxonomy_uninstall() {
+  drupal_load('module', 'taxonomy');
+  drupal_load('module', 'xmlsitemap');
+  $vids = array_keys(taxonomy_get_vocabularies());
+  foreach ($vids as $vid) {
+    xmlsitemap_link_bundle_delete('taxonomy_term', $vid);
+  }
+}
+
+/**
+ * Implements hook_update_last_removed().
+ */
+function xmlsitemap_taxonomy_update_last_removed() {
+  return 6198;
+}
+
+/**
+ * Cleanup variables.
+ */
+function xmlsitemap_taxonomy_update_6200() {
+  drupal_load('module', 'taxonomy');
+  drupal_load('module', 'xmlsitemap');
+  $vids = array_keys(taxonomy_get_vocabularies());
+  foreach ($vids as $vid) {
+    $settings = array(
+      'status' => variable_get('xmlsitemap_taxonomy_status_' . $vid, XMLSITEMAP_STATUS_DEFAULT),
+      'priority' => variable_get('xmlsitemap_taxonomy_priority_' . $vid, XMLSITEMAP_PRIORITY_DEFAULT),
+    );
+    variable_set('xmlsitemap_settings_taxonomy_term_' . $vid, $settings);
+    variable_del('xmlsitemap_taxonomy_status_' . $vid);
+    variable_del('xmlsitemap_taxonomy_priority_' . $vid);
+    variable_del('xmlsitemap_taxonomy_calculate_priority_' . $vid);
+    variable_del('xmlsitemap_taxonomy_include_empty_terms_' . $vid);
+  }
+  variable_del('xmlsitemap_taxonomy_include_empty_terms');
+  variable_del('xmlsitemap_taxonomy_calculate_priority');
+}
+
+/**
+ * Empty update.
+ */
+function xmlsitemap_taxonomy_update_6201() {
+}

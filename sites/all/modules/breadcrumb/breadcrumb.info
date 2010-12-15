@@ -1,0 +1,14 @@
+; $Id: breadcrumb.info,v 1.2 2010/12/07 19:23:34 sun Exp $
+name = Breadcrumb
+description = Provides breadcrumbs as configurable blocks.
+;package = Multilingual
+core = 7.x
+dependencies[] = block
+files[] = tests/breadcrumb.test
+
+; Information added by drupal.org packaging script on 2010-12-08
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "breadcrumb"
+datestamp = "1291766897"
+

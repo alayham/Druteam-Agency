@@ -1,0 +1,16 @@
+/* $Id: ds_3col.css,v 1.1.2.1 2010/10/31 00:10:38 swentel Exp $ */
+
+.group-left {
+  float: left;
+  width: 25%;
+}
+
+.group-middle {
+	float: left;
+	width: 50%;
+}
+
+.group-right {
+  float: left;
+  width: 25%;
+}

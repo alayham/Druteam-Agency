@@ -1,0 +1,15 @@
+; $Id: entitycache.info,v 1.1 2009/09/24 13:10:20 catch Exp $
+name = Entity cache
+description = Provides caching for core entities including nodes and taxonomy terms.
+
+core = 7.x
+
+files[] = entitycache.module
+files[] = entitycache.install
+
+; Information added by drupal.org packaging script on 2010-11-09
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "entitycache"
+datestamp = "1289261416"
+

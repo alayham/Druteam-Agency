@@ -1,0 +1,15 @@
+; $Id: search_embedded_form.info,v 1.1 2010/08/11 14:21:39 dries Exp $
+name = "Search embedded form"
+description = "Support module for search module testing of embedded forms."
+package = Testing
+version = VERSION
+core = 7.x
+files[] = search_embedded_form.module
+hidden = TRUE
+
+; Information added by drupal.org packaging script on 2010-12-12
+version = "7.x-dev"
+core = "7.x"
+project = "drupal"
+datestamp = "1292112666"
+

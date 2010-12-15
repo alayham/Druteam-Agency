@@ -1,0 +1,26 @@
+; $Id: media.info,v 1.5 2010/11/19 15:11:10 JacobSingh Exp $
+
+name = Media
+description = Provides the core Media API
+package = Media
+core = 7.x
+php = 5.2
+files[] = media.install
+files[] = media.module
+files[] = media.admin.inc
+files[] = media.theme.inc
+files[] = media.types.inc
+files[] = MediaReadOnlyStreamWrapper.inc
+; Tests
+files[] = test/media.types.test
+files[] = test/media.entity.test
+dependencies[] = file
+dependencies[] = image
+dependencies[] = file_styles
+
+; Information added by drupal.org packaging script on 2010-11-30
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "media"
+datestamp = "1291076323"
+

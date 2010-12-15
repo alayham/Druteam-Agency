@@ -1,0 +1,14 @@
+; $Id: nfccaptcha.info,v 1.1.2.1 2010/09/25 19:27:57 voxpelli Exp $
+name = CAPTCHA compatability
+description = Adds support for CAPTCHA in node forms
+dependencies[] = nodeformcols
+dependencies[] = captcha
+core = 7.x
+package = Node form columns
+
+; Information added by drupal.org packaging script on 2010-09-26
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "nodeformcols"
+datestamp = "1285460009"
+

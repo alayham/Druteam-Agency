@@ -1,0 +1,11 @@
+/* $Id: ds_2col.css,v 1.1.2.1 2010/10/30 21:56:43 swentel Exp $ */
+
+.group-left {
+  float: left;
+  width: 50%;
+}
+
+.group-right {
+	float: left;
+  width: 50%;
+}

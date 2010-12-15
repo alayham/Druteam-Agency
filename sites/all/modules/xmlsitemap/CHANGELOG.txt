@@ -1,0 +1,5 @@
+$Id: CHANGELOG.txt,v 1.2 2009/12/22 23:38:53 davereid Exp $
+
+XML Sitemap 7.x-2.x-dev
+-----------------------
+

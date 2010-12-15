@@ -1,0 +1,52 @@
+<?php
+// $Id: breadcrumb.module,v 1.12 2010/12/07 22:38:03 sun Exp $
+
+/**
+ * @file
+ * Provides breadcrumbs as configurable blocks.
+ */
+
+/**
+ * Implements MODULE_preprocess_HOOK().
+ */
+function breadcrumb_preprocess_page(&$variables) {
+  // Preemptively set the 'breadcrumb' variable, so that template_process_page()
+  // performs nothing, and this module can render the breadcrumb as a block
+  // instead.
+  $variables['breadcrumb'] = '';
+}
+
+/**
+ * Implements hook_block_list().
+ */
+function breadcrumb_block_info() {
+  $blocks['breadcrumb'] = array(
+    'info' => t('Breadcrumb'),
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function breadcrumb_block_view($delta) {
+  $block = array();
+  if ($delta == 'breadcrumb') {
+    // Use a #pre_render callback instead of theme() or drupal_get_breadcrumb(),
+    // so breadcrumb building/retrieval happens similarly late as
+    // template_process_page(), and thus, accounts for potential customizations.
+    $block['content'] = array(
+      '#pre_render' => array('breadcrumb_pre_render_breadcrumb'),
+      '#theme' => 'breadcrumb',
+    );
+  }
+  return $block;
+}
+
+/**
+ * #pre_render callback for #theme 'breadcrumb' elements.
+ */
+function breadcrumb_pre_render_breadcrumb($element) {
+  $element['#breadcrumb'] = drupal_get_breadcrumb();
+  return $element;
+}

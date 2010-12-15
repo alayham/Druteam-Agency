@@ -1,0 +1,40 @@
+<?php
+
+// $Id: session_api.install,v 1.2 2009/09/14 23:38:49 jhedstrom Exp $
+
+/**
+ * Implement hook_schema().
+ */
+function session_api_schema() {
+  $schema['session_api'] = array(
+    'description' => t('Map Session API IDs to the {sessions} sid field.'),
+    'fields' => array(
+      'sid' => array(
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'session_id' => array(
+        'type' => 'varchar',
+        'length' => 64,
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('sid'),
+    'unique keys' => array(
+      'session_id' => array('session_id'),
+    ),
+  );
+
+  return $schema;
+}
+
+/**
+ * Remove cleanup variables.
+ */
+function session_api_update_6100() {
+  $ret = array();
+
+  $ret[] = update_sql("DELETE FROM {variable} WHERE name LIKE 'session_api_run_cron_%'");
+
+  return $ret;
+}

@@ -1,0 +1,594 @@
+<?php
+// $Id: ds.module,v 1.1.2.50.2.41 2010/12/09 21:50:28 swentel Exp $
+
+/**
+ * Core functions for the Display Suite module.
+ */
+
+
+/**
+ * Constants for field types.
+ */
+define('DS_FIELD_TYPE_THEME', 1);
+define('DS_FIELD_TYPE_FUNCTION', 2);
+define('DS_FIELD_TYPE_PREPROCESS', 3);
+define('DS_FIELD_TYPE_IGNORE', 4);
+define('DS_FIELD_TYPE_CODE', 5);
+define('DS_FIELD_TYPE_BLOCK', 6);
+
+/**
+ * Constants for field statuses.
+ */
+define('DS_FIELD_STATUS_STATIC', 1);
+define('DS_FIELD_STATUS_DEFAULT', 2);
+define('DS_FIELD_STATUS_CUSTOM', 3);
+define('DS_FIELD_STATUS_OVERRIDDEN', 4);
+
+/**
+ * Constants for block fields rendering.
+ */
+define('DS_BLOCK_TEMPLATE', 1);
+define('DS_BLOCK_TITLE_CONTENT', 2);
+define('DS_BLOCK_CONTENT', 3);
+
+/**
+ * Implements hook_permission().
+ */
+function ds_permission() {
+  return array(
+    'admin_view_modes' => array(
+      'title' => t('Administer view modes'),
+      'description' => t('Create custom view modes for every entity.')
+    ),
+    'admin_fields' => array(
+      'title' => t('Administer fields'),
+      'description' => t('Create fields for every entity.')
+    ),
+  );
+}
+
+/**
+ * Implementation of hook_views_api().
+ */
+function ds_views_api() {
+  return array(
+    'api' => '3',
+    'path' => drupal_get_path('module', 'ds'),
+  );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function ds_menu() {
+  module_load_include('inc', 'ds', 'ds.registry');
+  return _ds_menu();
+}
+
+/**
+ * Implements hook_theme().
+ */
+function ds_theme() {
+  module_load_include('inc', 'ds', 'ds.registry');
+  return _ds_theme();
+}
+
+/**
+ * Implements hook_entity_info_alter().
+ */
+function ds_theme_registry_alter(&$theme_registry) {
+  module_load_include('inc', 'ds', 'ds.registry');
+  _ds_theme_registry_alter($theme_registry);
+}
+
+/**
+ * Implements hook_entity_info_alter().
+ */
+function ds_entity_info_alter(&$entity_info) {
+  module_load_include('inc', 'ds', 'ds.registry');
+  _ds_entity_info_alter($entity_info);
+}
+
+/**
+ * Implements hook_ds_layouts().
+ */
+function ds_ds_layouts() {
+  module_load_include('inc', 'ds', 'ds.registry');
+  return _ds_ds_layouts();
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function ds_form_field_ui_field_overview_form_alter(&$form, &$form_state) {
+  module_load_include('inc', 'ds', 'ds.field_ui');
+  ds_extend_field_ui_table($form, $form_state);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function ds_form_field_ui_display_overview_form_alter(&$form, &$form_state) {
+  module_load_include('inc', 'ds', 'ds.field_ui');
+  ds_extend_field_ui_table($form, $form_state);
+}
+
+/**
+ * Save the layout settings from the 'Manage fields' & 'Manage display' screen.
+ */
+function ds_extend_field_ui_layouts_submit($form, &$form_state) {
+  module_load_include('inc', 'ds', 'ds.field_ui');
+  ds_extend_field_ui_layouts_save($form, $form_state);
+}
+
+/**
+ * Save the field settings from the 'Manage fields' & 'Manage display' screen.
+ */
+function ds_extend_field_ui_fields_submit($form, &$form_state) {
+  module_load_include('inc', 'ds', 'ds.field_ui');
+  ds_extend_field_ui_fields_save($form, $form_state);
+}
+
+/**
+ * Load our own entity implementatios for fields, registry etc.
+ *
+ * @param $return
+ *   Whether to return the enabled entities or not.
+ * @return $entities
+ *   A collection of entities we support.
+ */
+function ds_load_entity_implementations($return = FALSE) {
+  static $loaded, $entities = FALSE;
+
+  if (!$loaded) {
+    $loaded = TRUE;
+    $entities = array();
+    $entity_info = entity_get_info();
+    foreach ($entity_info as $entity_type => $info) {
+      $file = module_load_include('inc', 'ds', 'entities/' . $entity_type . '/' . $entity_type);
+      if ($file) {
+        $entities[] = $entity_type;
+      }
+    }
+  }
+
+  if ($return) {
+    return $entities;
+  }
+}
+
+/**
+ * API function to get fields.
+ *
+ * @param $entity_type
+ *   The name of the entity.
+ * @param $bundle
+ *   The name of bundle (ie, page or story for node types, profile for users)
+ * @param $view_mode
+ *   The name of view mode.
+ * @param $reset
+ *   Whether we need to reset the fields cache or not.
+ * @param $cache
+ *   Whether we need to cache the the fields or not.
+ * @return
+ *   Collection of fields.
+ */
+function ds_get_fields($entity_type, $bundle, $view_mode, $reset = FALSE, $cache = TRUE) {
+
+  // Bail out on forms.
+  if ($view_mode == 'form') {
+    return array();
+  }
+
+  static $static_fields = array();
+  if (!isset($static_fields[$entity_type][$bundle][$view_mode])) {
+
+    // Do we have them cached or not ? // TODO Get this from cache instead of variable
+    // This takes a few iterations of a site before everything will be in it,
+    $ds_fields_cached = variable_get('ds_fields_cached', array());
+    if (!isset($ds_fields_cached[$entity_type][$bundle][$view_mode]) || $reset) {
+
+      // Load our own entity implementations // TODO enable or disable our own entities implementations ?
+      ds_load_entity_implementations();
+
+      // Fields in code.
+      $fields = array();
+      foreach (module_implements('ds_fields') as $module) {
+        $function = $module .'_ds_fields';
+        $all_fields = $function($entity_type, $bundle, $view_mode);
+        if (!empty($all_fields)) {
+          foreach ($all_fields as $key => $field_results) {
+            if ($key === $entity_type) {
+              $fields = array_merge($field_results, $fields);
+            }
+          }
+        }
+      }
+
+      // Fields in database. // TODO refactor / cache this, in fact, this complete function needs to be refactored :)
+      // TODO all stuff should be objects, not arrays (see properties here)
+      $custom_fields = ds_get_custom_fields();
+      foreach ($custom_fields as $key => $field) {
+        if (isset($field->entities[$entity_type])) {
+          $fields[$key] = array(
+            'title' => $field->label,
+            'type' => $field->type,
+            // TODO status field
+            'properties' => (array) $field->properties,
+          );
+        }
+      }
+
+      // Give modules a change to alter fields.
+      drupal_alter('ds_fields', $fields);
+
+      // If we reset, remove the old settings, otherwhise, save the new ones.
+      if ($reset) {
+        unset($ds_fields_cached[$entity_type][$bundle][$view_mode]);
+      }
+      else {
+        $ds_fields_cached[$entity_type][$bundle][$view_mode] = $fields;
+      }
+      // Do we cache or not ?
+      if ($cache) {
+        //variable_set('ds_fields_cached', $ds_fields_cached);
+      }
+    }
+    else {
+      $fields = $ds_fields_cached[$entity_type][$bundle][$view_mode];
+    }
+
+    // Store the fields.
+    $static_fields[$entity_type][$bundle][$view_mode] = $fields;
+  }
+
+  return $static_fields[$entity_type][$bundle][$view_mode];
+}
+
+/**
+ * Get entity view modes.
+ *
+ * @param $entity
+ *   The name of the entity.
+ * @param $options
+ *   Whether to return all view modes or a key array.
+ */
+function ds_entity_view_modes($entity = 'all', $options = TRUE) {
+  // @todo make static - choose the way of returning.
+  $view_mode_options = array();
+  $entity_info = entity_get_info($entity);
+  foreach ($entity_info['view modes'] as $key => $view_mode) {
+    $view_mode_options[$key] = $view_mode['label'];
+  }
+  return $view_mode_options;
+}
+
+/**
+ * Get custom view modes defined by Display Suite.
+ */
+function ds_get_view_modes() {
+  static $custom_view_modes = NULL;
+
+  if (!isset($custom_view_modes)) {
+    $custom_view_modes = array();
+    $results = db_query('SELECT view_mode, label, entities FROM {ds_view_modes}')->fetchAll();
+    foreach ($results as $view_mode) {
+      $view_mode->entities = unserialize($view_mode->entities);
+      $custom_view_modes[$view_mode->view_mode] = $view_mode;
+    }
+  }
+
+  return $custom_view_modes;
+}
+
+/**
+ * Get custom fields defined by Display Suite.
+ */
+function ds_get_custom_fields() {
+  static $custom_fields = NULL;
+
+  if (!isset($fields)) {
+    $custom_fields = array();
+    $results = db_query('SELECT field, label, type, entities, properties FROM {ds_fields}')->fetchAll();
+    foreach ($results as $field) {
+      $field->entities = unserialize($field->entities);
+      $field->properties = unserialize($field->properties);
+      $custom_fields[$field->field] = $field;
+    }
+  }
+
+  return $custom_fields;
+}
+
+/**
+ * Get the value for a Display Suite field.
+ *
+ * @param $key
+ *   The key of the field.
+ * @param $field
+ *   The configuration of a DS field.
+ * @param $entity
+ *   The current entity.
+ * @param $entity_type
+ *   The name of the entity.
+ * @param $bundle
+ *   The name of the bundle.
+ * @param $view_mode
+ *   The name of the view mode.
+ * @return $markup
+ *   The markup of the field used for output.
+ */
+function ds_get_field_value($key, $field, $entity, $entity_type, $bundle, $view_mode) {
+  static $included_files = array();
+
+  $field['entity'] = $entity;
+
+  switch ($field['type']) {
+    case DS_FIELD_TYPE_FUNCTION:
+      // TODO make sure we use DRUPAL_ROOT to include
+      if (isset($field['file']) && !isset($included_files[$field['file']])) {
+        $included_files[$field['file']] = TRUE;
+        include_once($field['file']);
+      }
+      $function = (isset($field['formatter'])) ? $field['formatter'] : key($field['properties']['formatters']);
+      return $function($field);
+
+    case DS_FIELD_TYPE_THEME:
+      $format = (isset($field['formatter'])) ? $field['formatter'] : key($field['properties']['formatters']);
+      return theme($format, $field);
+      break;
+  }
+}
+
+/**
+ * Get the configuration for field settings.
+ *
+ * @param $entity_type
+ *   The name of the entity.
+ * @param $bundle
+ *   The name of bundle (ie, page or story for node types, profile for users)
+ * @param $view_mode
+ *   The name of view mode.
+ */
+function ds_get_fields_configuration($entity_type, $bundle, $view_mode) {
+  static $fields_configuration = NULL;
+
+  if (!isset($fields_configuration)) {
+    if ($cache = cache_get('ds_fields_configuration')) {
+      $fields_configuration = $cache->data;
+    }
+    else {
+      $result = db_query('SELECT field, entity_type, bundle, view_mode, settings FROM {ds_settings}')->fetchAll();
+      foreach ($result as $row) {
+        $fields_configuration[$row->entity_type][$row->bundle][$row->view_mode][$row->field] = unserialize($row->settings);
+      }
+      cache_set('ds_fields_configuration', $fields_configuration);
+    }
+  }
+
+  return (isset($fields_configuration[$entity_type][$bundle][$view_mode])) ? $fields_configuration[$entity_type][$bundle][$view_mode] : (isset($fields_configuration[$entity_type][$bundle]['default']) ? $fields_configuration[$entity_type][$bundle]['default'] : array());
+}
+
+/**
+ * Implements hook_field_attach_view_alter().
+ */
+function ds_field_attach_view_alter(&$build, $context) {
+  $entity_type = $build['#entity_type'];
+  $bundle = $build['#bundle'];
+  $view_mode = $context['view_mode'];
+  $entity = $context['entity'];
+  ds_render_content($build, $entity_type, $bundle, $view_mode, $entity);
+  ds_determine_layout_variables($entity_type, $bundle, $view_mode, 'css', $build['#attached']);
+}
+
+/**
+ * Implements hook_preprocess_entity().
+ *
+ * This hook doesn't exists but is added in ds_theme_registry_alter()
+ * to every entity that is themeable to modify the theme_hook_suggestions key.
+ */
+function ds_preprocess_entity(&$variables) {
+  ds_determine_layout_variables($variables['elements']['#entity_type'], $variables['elements']['#bundle'], $variables['elements']['#view_mode'], 'theme_hook_suggestions', $variables);
+}
+
+/**
+ * Implements hook_field_attach_form().
+ */
+function ds_field_attach_form($entity_type, $entity, &$form, &$form_state, $langcode) {
+  ds_determine_layout_variables($entity_type, $form['#bundle'], 'form', 'css', $form['#attached']);
+}
+
+/**
+ *
+ * @param $entity_type
+ *   The name of the entity.
+ * @param $bundle
+ *   The name of the bundle.
+ * @param $view_mode
+ *   The name of the view mode.
+ * @param $variables
+ *   The variables to add either the css file or theme_hook_suggestions.
+ * @param $type
+ *   The type of variables to ad$outputd to (can be css or theme_hook_suggestions).
+ */
+function ds_determine_layout_variables($entity_type, $bundle, $view_mode, $type, &$variables) {
+  // @todo keep static
+  $layout = array();
+  $entity_info = entity_get_info();
+
+  $view_mode_settings = field_view_mode_settings($entity_type, $bundle);
+  $overriden = (!empty($view_mode_settings[$view_mode]['custom_settings']) ? TRUE : FALSE);
+
+  // Check if a layout is configured.
+  if (isset($entity_info[$entity_type]['bundles'][$bundle]['layouts'][$view_mode])) {
+    $layout = $entity_info[$entity_type]['bundles'][$bundle]['layouts'][$view_mode];
+  }
+
+  // In case $view_mode is not form and not found, check if we have a default layout,
+  // but only if the view mode settings aren't overridden for this view mode.
+  if ($view_mode != 'form' && $view_mode != 'default' && !$overriden && isset($entity_info[$entity_type]['bundles'][$bundle]['layouts']['default'])) {
+    $layout = $entity_info[$entity_type]['bundles'][$bundle]['layouts']['default'];
+  }
+
+  if (!empty($layout)) {
+
+    // Add path to css file for this layout.
+    if ($type == 'css') {
+      $css_file = $layout['path'] . '/' . $layout['layout'] . '.css';
+      if (!isset($variables['css'])) {
+        $variables['css'] = array();
+      }
+      $variables['css'][] = $css_file;
+    }
+
+    // Add template files for hook_theme_suggestions and also the regions.
+    if ($type == 'theme_hook_suggestions') {
+      $variables['ds_layout'] = $layout;
+      $variables['theme_hook_suggestions'][] = $layout['layout'] . ($layout['load_html5'] ? '_html5' : '');
+    }
+  }
+}
+
+/**
+ * Render content of an entity.
+ * @todo this should be renamed no?
+ */
+function ds_render_content(&$output, $entity_type, $bundle, $view_mode, $entity) {
+  $field_values = ds_get_fields_configuration($entity_type, $bundle, $view_mode);
+  $fields = ds_get_fields($entity_type, $bundle, $view_mode);
+
+  foreach ($fields as $key => $field) {
+
+    $format = isset($field_values[$key]['format']) ? $field_values[$key]['format'] : 'hidden';
+
+    if ($format == 'hidden') {
+      continue;
+    }
+
+    $field['formatter'] = $format;
+    $field_value = ds_get_field_value($key, $field, $entity, $entity_type, $bundle, $view_mode);
+
+    $output[$key] = array(
+      '#theme' => 'field',
+      '#field_type' => 'ds',
+      '#title' => $field['title'],
+      '#weight' => isset($field_values[$key]['weight']) ? $field_values[$key]['weight'] : 0,
+      '#label_display' => isset($field_values[$key]['label']) ? $field_values[$key]['label'] : 'inline',
+      '#field_name' => $key,
+      '#bundle' => $bundle,
+      '#entity_type' => $entity_type,
+      '#access' => TRUE,
+      '#items' => array(
+        0 => array(
+          'value' => $field_value,
+        ),
+      ),
+      0 => array(
+        '#markup' => $field_value,
+      ),
+    );
+  }
+}
+
+function ds_render_region($content, $region, $layout) {
+  $output = '';
+  if (isset($layout['settings']['regions'][$region])) {
+    foreach ($layout['settings']['regions'][$region] as $key => $field) {
+      $output .= render($content[$field]);
+    }
+  }
+  return $output;
+}
+
+/**
+ * Wrapper function around PHP eval(). We don't use php_eval
+ * because custom fields might need properties from the current
+ * object.
+ *
+ * @param string $code The code to evaluate from the custom field.
+ * @param stdClass $object An object to use for evaluation.
+ * @return string $output The output from eval.
+ */
+function ds_eval($code, $entity) {
+  global $theme_path, $theme_info, $conf;
+
+  // Store current theme path.
+  $old_theme_path = $theme_path;
+
+  // Restore theme_path to the theme, as long as ds_eval() executes,
+  // so code evaluted will not see the caller module as the current theme.
+  // If theme info is not initialized get the path from theme_default.
+  if (!isset($theme_info)) {
+    $theme_path = drupal_get_path('theme', $conf['theme_default']);
+  }
+  else {
+    $theme_path = dirname($theme_info->filename);
+  }
+
+  ob_start();
+  print eval('?>'. $code);
+  $output = ob_get_contents();
+  ob_end_clean();
+
+  // Recover original theme path.
+  $theme_path = $old_theme_path;
+
+  return $output;
+}
+
+/**
+ * Evaluate custom code.
+ *
+ * @todo rename to something else, we really need to check with content_format!
+ *
+ * @param $field
+ *   The field with all its properties.
+ */
+function theme_ds_eval_code($field) {
+  if (isset($field['properties']['code'])) {
+    $value = ds_eval($field['properties']['code'], $field['entity']);
+    // Token support - check on token property so we don't run every single field through token.
+    if (module_exists('token') && isset($field['properties']['token']) && $field['properties']['token'] == TRUE) {
+      $value = token_replace($value, $field['object_type'], $field['object']);
+    }
+    return $value;
+  }
+}
+
+/**
+ * Evaluate block field.
+ *
+ * @param $field
+ *   The field array.
+ */
+function theme_ds_eval_block($field) {
+  if (isset($field['properties'])) {
+    list($module, $delta) = explode('|', $field['properties']['block']);
+    $block = module_invoke($module, 'block', 'view', $delta);
+    if (!empty($block)) {
+      switch ($field['properties']['render']) {
+        case DS_BLOCK_TEMPLATE:
+          global $theme_key;
+          $block = (object) $block;
+          $block->region = NULL;
+          $block->module = $module;
+          $block->delta = $delta;
+          $block_title = db_query("SELECT title FROM {block} WHERE module = :module AND delta = :delta AND theme = :theme", array(':module' => $module, ':delta' => $delta, ':theme' => $theme_key))->fetchField();
+          if (!empty($block_title)) {
+            $block->subject = $block_title == '<none>' ? '' : check_plain($block_title);
+          }
+          $content = theme('block', $block);
+          break;
+        case DS_BLOCK_TITLE_CONTENT:
+          $content = '<h2 class="block-title">'. $block['subject'] .'</h2>';
+          $content .= $block['content'];
+          break;
+        case DS_BLOCK_CONTENT:
+          $content = $block['content'];
+          break;
+      }
+      return $content;
+    }
+  }
+}
+

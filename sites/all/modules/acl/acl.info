@@ -1,0 +1,16 @@
+; $Id: acl.info,v 1.4 2010/05/16 19:16:39 salvis Exp $
+name = ACL
+description = Access control list API. Has no features on its own.
+core = 7.x
+package = Access control
+files[] = acl.admin.inc
+files[] = acl.install
+files[] = acl.module
+files[] = acl.test
+
+; Information added by drupal.org packaging script on 2010-11-07
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "acl"
+datestamp = "1289088236"
+

@@ -1,0 +1,13 @@
+; $Id: user_reference.info,v 1.1 2010/12/06 21:28:17 yched Exp $
+name = User Reference
+description = Defines a field type for referencing a user from a node.
+files[]=user_reference.module
+package = CCK
+core = 7.x
+
+; Information added by drupal.org packaging script on 2010-12-08
+version = "7.x-2.x-dev"
+core = "7.x"
+project = "references"
+datestamp = "1291767781"
+

@@ -1,0 +1,16 @@
+; $Id: rules_scheduler.info,v 1.1.4.2 2010/06/26 19:39:41 fago Exp $
+name = Rules Scheduler
+description = Schedule the execution of rule components.
+dependencies[] = rules
+package = Rules
+core = 7.x
+files[] = rules_scheduler.module
+files[] = rules_scheduler.install
+files[] = rules_scheduler.rules.inc
+files[] = rules_scheduler.test
+; Information added by drupal.org packaging script on 2010-12-06
+version = "7.x-2.0-alpha3"
+core = "7.x"
+project = "rules"
+datestamp = "1291637070"
+

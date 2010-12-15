@@ -1,0 +1,27 @@
+$Id: CHANGELOG.txt,v 1.49 2010/11/06 22:23:13 salvis Exp $
+
+CHANGELOG for ACL for Drupal 7
+
+
+acl 7.x-1.x-BETA1 (2010-11-06):
+  Enhancements:
+    - Add $number to hook_acl_explain(), too.
+    - Add new acl_add_nodes() function to add access control to multiple nodes selected by a subquery.
+    - #936682: Add a 'number' column and some indexes to the {acl} table.
+    - #761696: Add tests (work in progress).
+    - Create new hook_acl_explain() to allow the client to explain its grant records.
+    - Add acl_has_user($acl_id, $uid) API function.
+  Port to D7:
+    - Need to pass $form_state by reference to _acl_edit_form_after_build().
+    - #946636: Fix WSOD due to core reloading the form from the cache and not loading include files.
+    - #836822: Don't anonymize 'deny' grant records.
+    - #836822: Fix some porting errors.
+    - Fix line endings (no functional change).
+    - #798106: Convert another left-over db_result() call.
+    - #824642: Avoid type conversion problems when FALSE is passed rather than 0.
+    - #798106: Fix incomplete porting (db_query).
+    - #761696: Simpletests: provide some dummy files.
+    - #798108: Remove drupal_install_schema() and drupal_uninstall_schema() calls.
+    - Port database statements.
+    - Use 6.x-1.1 and fix the applicable Coder errors.
+

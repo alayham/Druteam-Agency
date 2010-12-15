@@ -1,0 +1,385 @@
+# $Id: views_system.pot,v 1.1.6.1 2010/11/06 06:14:33 flanker Exp $
+#
+# LANGUAGE translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  views_system.module,v 1.2.2.4 2010/11/04 14:18:59 flanker
+#  views_system.info,v 1.2.2.2 2010/11/03 15:03:02 flanker
+#  views_system.views.inc,v 1.1.2.3 2010/11/04 14:18:59 flanker
+#  views_handler_field_system_info_configure.inc,v 1.1.2.2 2010/10/31 16:14:07 flanker
+#  views_handler_field_system_info_datestamp.inc,v 1.2.2.1 2010/10/31 16:14:07 flanker
+#  views_handler_field_system_info_dependencies.inc,v 1.2.2.1 2010/10/31 16:14:07 flanker
+#  views_handler_field_system_info_features.inc,v 1.2.2.1 2010/10/31 16:14:07 flanker
+#  views_handler_field_system_info_files.inc,v 1.1.2.1 2010/10/31 16:14:07 flanker
+#  views_handler_field_system_info_regions.inc,v 1.2.2.1 2010/10/31 16:14:07 flanker
+#  views_handler_field_system_info_settings.inc,v 1.1.2.1 2010/10/31 16:14:07 flanker
+#  views_handler_field_system_info_stylesheets.inc,v 1.1.6.3 2010/10/31 16:14:07 flanker
+#  views_handler_field_system_info_screenshot.inc,v 1.2.2.2 2010/10/31 16:14:07 flanker
+#  views_handler_field_system_info_scripts.inc,v 1.1.6.3 2010/10/31 16:14:07 flanker
+#  views_handler_filter_system_status.inc,v 1.1.2.2 2010/10/31 16:14:07 flanker
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2010-11-06 07:09+0100\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: views_system.module:50
+msgid "Module"
+msgstr ""
+
+#: views_system.module:51
+msgid "Theme"
+msgstr ""
+
+#: views_system.info:0
+msgid "Views System"
+msgstr ""
+
+#: views_system.info:0
+msgid "Allows to create customized lists (pages, blocks) of modules, themes, and theme engines that are or have been installed in Drupal's file system."
+msgstr ""
+
+#: views_system.info:0
+msgid "Views"
+msgstr ""
+
+#: views/views_system.views.inc:25
+msgid "System item"
+msgstr ""
+
+#: views/views_system.views.inc:26
+msgid "System items are modules, themes, and theme engines that are or have been installed in Drupal's file system."
+msgstr ""
+
+#: views/views_system.views.inc:30
+msgid "System"
+msgstr ""
+
+#: views/views_system.views.inc:33
+msgid "Filename"
+msgstr ""
+
+#: views/views_system.views.inc:34
+msgid "The path of the primary file for this item, relative to the Drupal root; e.g. modules/node/node.module."
+msgstr ""
+
+#: views/views_system.views.inc:47
+msgid "Name"
+msgstr ""
+
+#: views/views_system.views.inc:48
+msgid "The name of the item; e.g. node."
+msgstr ""
+
+#: views/views_system.views.inc:64
+msgid "Type"
+msgstr ""
+
+#: views/views_system.views.inc:65
+msgid "The type of the item, either module, theme, or theme_engine."
+msgstr ""
+
+#: views/views_system.views.inc:82
+msgid "Owner"
+msgstr ""
+
+#: views/views_system.views.inc:83
+msgid "A theme's 'parent'. Can be either a theme or an engine."
+msgstr ""
+
+#: views/views_system.views.inc:99;110
+msgid "Status"
+msgstr ""
+
+#: views/views_system.views.inc:100
+msgid "Boolean indicating whether or not this item is enabled."
+msgstr ""
+
+#: views/views_system.views.inc:117
+msgid "Bootstrap"
+msgstr ""
+
+#: views/views_system.views.inc:118
+msgid "Boolean indicating whether this module is loaded during Drupal's early bootstrapping phase (e.g. even before the page cache is consulted)."
+msgstr ""
+
+#: views/views_system.views.inc:134
+msgid "Schema version"
+msgstr ""
+
+#: views/views_system.views.inc:135
+msgid "The module's database schema version number. -1 if the module is not installed (its tables do not exist); 0 or the largest N of the module's hook_update_N() function that has either been run or existed when the module was first installed."
+msgstr ""
+
+#: views/views_system.views.inc:151
+msgid "Weight"
+msgstr ""
+
+#: views/views_system.views.inc:152
+msgid "The order in which this module's hooks should be invoked relative to other modules. Equal-weighted modules are ordered by name."
+msgstr ""
+
+#: views/views_system.views.inc:169
+msgid "Base theme"
+msgstr ""
+
+#: views/views_system.views.inc:170
+msgid "The name of the base theme."
+msgstr ""
+
+#: views/views_system.views.inc:176 views/handlers/views_handler_field_system_info_configure.inc:63
+msgid "Configure"
+msgstr ""
+
+#: views/views_system.views.inc:177
+msgid "The configure line of the module."
+msgstr ""
+
+#: views/views_system.views.inc:183
+msgid "Core"
+msgstr ""
+
+#: views/views_system.views.inc:184
+msgid "The Drupal core version of the item."
+msgstr ""
+
+#: views/views_system.views.inc:190
+msgid "Date stamp"
+msgstr ""
+
+#: views/views_system.views.inc:191
+msgid "The date stamp of the project this item belongs to."
+msgstr ""
+
+#: views/views_system.views.inc:197
+msgid "Dependencies"
+msgstr ""
+
+#: views/views_system.views.inc:198
+msgid "Required modules."
+msgstr ""
+
+#: views/views_system.views.inc:201
+msgid "Depends on"
+msgstr ""
+
+#: views/views_system.views.inc:205
+msgid "Description"
+msgstr ""
+
+#: views/views_system.views.inc:206
+msgid "The brief description of the item."
+msgstr ""
+
+#: views/views_system.views.inc:212
+msgid "Engine"
+msgstr ""
+
+#: views/views_system.views.inc:213
+msgid "The name of the theme engine; typically: engine = phptemplate."
+msgstr ""
+
+#: views/views_system.views.inc:219
+msgid "Features"
+msgstr ""
+
+#: views/views_system.views.inc:220
+msgid "The features of the item."
+msgstr ""
+
+#: views/views_system.views.inc:226
+msgid "Files"
+msgstr ""
+
+#: views/views_system.views.inc:227
+msgid "The declared files of the item."
+msgstr ""
+
+#: views/views_system.views.inc:233
+msgid "Display name"
+msgstr ""
+
+#: views/views_system.views.inc:234
+msgid "The real name of the item for display purposes; e.g. Node."
+msgstr ""
+
+#: views/views_system.views.inc:240
+msgid "Package"
+msgstr ""
+
+#: views/views_system.views.inc:241
+msgid "The name of the package this item belongs to."
+msgstr ""
+
+#: views/views_system.views.inc:247
+msgid "PHP"
+msgstr ""
+
+#: views/views_system.views.inc:248
+msgid "The minimum PHP version of the item."
+msgstr ""
+
+#: views/views_system.views.inc:254
+msgid "Project"
+msgstr ""
+
+#: views/views_system.views.inc:255
+msgid "The name of the project this item belongs to."
+msgstr ""
+
+#: views/views_system.views.inc:261
+msgid "Regions"
+msgstr ""
+
+#: views/views_system.views.inc:262
+msgid "The regions of the theme."
+msgstr ""
+
+#: views/views_system.views.inc:268
+msgid "Screenshot"
+msgstr ""
+
+#: views/views_system.views.inc:269
+msgid "The screenshot of the theme."
+msgstr ""
+
+#: views/views_system.views.inc:275
+msgid "Scripts"
+msgstr ""
+
+#: views/views_system.views.inc:276
+msgid "The declared Javascript files of the system item."
+msgstr ""
+
+#: views/views_system.views.inc:282
+msgid "Settings"
+msgstr ""
+
+#: views/views_system.views.inc:283
+msgid "The default settings of the theme."
+msgstr ""
+
+#: views/views_system.views.inc:289
+msgid "Stylesheets"
+msgstr ""
+
+#: views/views_system.views.inc:290
+msgid "The declared CSS files of the system item."
+msgstr ""
+
+#: views/views_system.views.inc:296
+msgid "Version"
+msgstr ""
+
+#: views/views_system.views.inc:297
+msgid "The version of the item."
+msgstr ""
+
+#: views/views_system.views.inc:304;312
+msgid "Drupal core"
+msgstr ""
+
+#: views/views_system.views.inc:305
+msgid "Boolean indicating whether this item is part of Drupal core."
+msgstr ""
+
+#: views/handlers/views_handler_field_system_info_configure.inc:49
+msgid "Display as link"
+msgstr ""
+
+#: views/handlers/views_handler_field_system_info_configure.inc:50
+msgid "If checked, this configure line will be made into a link to the main configuration page of the module."
+msgstr ""
+
+#: views/handlers/views_handler_field_system_info_datestamp.inc:52
+msgid "%time ago"
+msgstr ""
+
+#: views/handlers/views_handler_field_system_info_dependencies.inc:61
+msgid "The name of the required module."
+msgstr ""
+
+#: views/handlers/views_handler_field_system_info_features.inc:61
+msgid "The feature of the item."
+msgstr ""
+
+#: views/handlers/views_handler_field_system_info_files.inc:61
+msgid "The file of the item."
+msgstr ""
+
+#: views/handlers/views_handler_field_system_info_regions.inc:49 views/handlers/views_handler_field_system_info_settings.inc:49 views/handlers/views_handler_field_system_info_stylesheets.inc:49
+msgid "Display format"
+msgstr ""
+
+#: views/handlers/views_handler_field_system_info_regions.inc:50
+msgid "Alter the output of this field by specifying a string of text with replacement tokens. Replacement patterns: [human_name], [machine_name]"
+msgstr ""
+
+#: views/handlers/views_handler_field_system_info_regions.inc:87
+msgid "The human name of the region."
+msgstr ""
+
+#: views/handlers/views_handler_field_system_info_regions.inc:88
+msgid "The machine name of the region."
+msgstr ""
+
+#: views/handlers/views_handler_field_system_info_screenshot.inc:49
+msgid "Display as image"
+msgstr ""
+
+#: views/handlers/views_handler_field_system_info_screenshot.inc:63
+msgid "Screenshot for %theme theme"
+msgstr ""
+
+#: views/handlers/views_handler_field_system_info_scripts.inc:61
+msgid "The Javascript file of the theme."
+msgstr ""
+
+#: views/handlers/views_handler_field_system_info_settings.inc:50
+msgid "Alter the output of this field by specifying a string of text with replacement tokens. Replacement patterns: [name], [value]"
+msgstr ""
+
+#: views/handlers/views_handler_field_system_info_settings.inc:87
+msgid "The name of the setting."
+msgstr ""
+
+#: views/handlers/views_handler_field_system_info_settings.inc:88
+msgid "The value of the setting."
+msgstr ""
+
+#: views/handlers/views_handler_field_system_info_stylesheets.inc:50
+msgid "Alter the output of this field by specifying a string of text with replacement tokens. Replacement patterns: [filename], [media]"
+msgstr ""
+
+#: views/handlers/views_handler_field_system_info_stylesheets.inc:89
+msgid "The filename of the CSS file."
+msgstr ""
+
+#: views/handlers/views_handler_field_system_info_stylesheets.inc:90
+msgid "The media type of the CSS file."
+msgstr ""
+
+#: views/handlers/views_handler_filter_system_status.inc:22
+msgid "On"
+msgstr ""
+
+#: views/handlers/views_handler_filter_system_status.inc:22
+msgid "Off"
+msgstr ""
+
+#: views/handlers/views_handler_filter_system_status.inc:27
+msgid "Enabled"
+msgstr ""
+
+#: views/handlers/views_handler_filter_system_status.inc:27
+msgid "Disabled"
+msgstr ""
+

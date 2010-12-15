@@ -1,0 +1,16 @@
+; $Id: views_accordion.info,v 1.1.4.1 2010/10/08 12:22:22 manuelgarcia Exp $
+name = Views Accordion
+description = Provides an accordion views display plugin.
+package = Views
+core = 7.x
+dependencies[] = views
+
+files[] = views_accordion.views.inc
+files[] = views_accordion_style_plugin.inc
+
+; Information added by drupal.org packaging script on 2010-12-06
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "views_accordion"
+datestamp = "1291638355"
+

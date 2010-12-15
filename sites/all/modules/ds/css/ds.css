@@ -1,0 +1,8 @@
+/* $Id: ds.css,v 1.1.2.9.2.4 2010/12/09 21:50:28 swentel Exp $ */
+
+#ds-tabs a {
+  font-size: 16px;
+  border: 1px solid #eee;
+  padding: 5px;
+  margin-right: 5px;
+}

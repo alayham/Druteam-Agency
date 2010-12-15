@@ -1,0 +1,38 @@
+<?php
+// $Id: xmlsitemap_engines.install,v 1.7 2010/04/07 22:30:46 davereid Exp $
+
+/**
+ * @file
+ * Install, update and uninstall functions for the xmlsitemap_engines module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function xmlsitemap_engines_install() {
+  // Set this module's weight to 1 so xmlsitemap_engines_cron() runs after
+  // the sitemap has been generated in xmlsitemap_cron().
+  db_update('system')
+    ->fields(array('weight' => 2))
+    ->condition('type', 'module')
+    ->condition('name', 'xmlsitemap_engines')
+    ->execute();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function xmlsitemap_engines_uninstall() {
+  variable_del('xmlsitemap_engines_engines');
+  variable_del('xmlsitemap_engines_custom_urls');
+  variable_del('xmlsitemap_engines_minimum_lifetime');
+  variable_del('xmlsitemap_engines_submit_last');
+  variable_del('xmlsitemap_engines_submit_updated');
+}
+
+/**
+ * Implements hook_update_last_removed().
+ */
+function xmlsitemap_engines_update_last_removed() {
+  return 6201;
+}

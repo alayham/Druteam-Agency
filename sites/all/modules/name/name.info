@@ -1,0 +1,22 @@
+; $Id: name.info,v 1.1.2.1 2010/10/10 05:32:06 aland Exp $
+name = Name Field
+description = Defines a persons name field type.
+dependencies[] = field
+package = Other
+version = VERSION
+core = 7.x
+
+files[] = name.admin.inc
+files[] = name.install
+files[] = name.module
+files[] = includes/name.content.inc
+files[] = includes/name.parser.inc
+files[] = includes/name.token.inc
+files[] = tests/name.test
+
+; Information added by drupal.org packaging script on 2010-10-11
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "name"
+datestamp = "1286756047"
+

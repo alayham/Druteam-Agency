@@ -1,0 +1,20 @@
+; $Id: link.info,v 1.2.6.3 2010/12/04 04:14:39 jcfiala Exp $
+name = Link
+description = Defines simple link field types.
+core = 7.x
+files[] = link.module
+files[] = link.install
+
+; Information added by drupal.org packaging script on 2010-10-18
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "link"
+datestamp = "1287403997"
+
+
+; Information added by drupal.org packaging script on 2010-12-05
+version = "7.x-1.0-alpha1"
+core = "7.x"
+project = "link"
+datestamp = "1291518680"
+

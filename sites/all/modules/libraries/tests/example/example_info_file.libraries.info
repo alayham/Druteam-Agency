@@ -1,0 +1,12 @@
+; $Id: example_info_file.libraries.info,v 1.1 2010/11/03 21:47:44 tstoeckler Exp $
+
+; This is an example info file of a library used for testing purposes.
+name = Example info file
+
+
+; Information added by drupal.org packaging script on 2010-12-04
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "libraries"
+datestamp = "1291421823"
+

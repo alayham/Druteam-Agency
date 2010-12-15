@@ -1,0 +1,49 @@
+; $Id: $
+name = Webform
+description = Enables the creation of forms and questionnaires.
+core = 7.x
+package = Webform
+configure = admin/config/content/webform
+
+files[] = webform.module
+files[] = webform.install
+
+files[] = components/date.inc
+files[] = components/email.inc
+files[] = components/fieldset.inc
+files[] = components/file.inc
+files[] = components/grid.inc
+files[] = components/hidden.inc
+files[] = components/markup.inc
+files[] = components/pagebreak.inc
+files[] = components/select.inc
+files[] = components/textarea.inc
+files[] = components/textfield.inc
+files[] = components/time.inc
+
+files[] = includes/webform.admin.inc
+files[] = includes/webform.components.inc
+files[] = includes/webform.emails.inc
+files[] = includes/webform.export.inc
+files[] = includes/webform.pages.inc
+files[] = includes/webform.report.inc
+files[] = includes/webform.submissions.inc
+
+files[] = views/webform_handler_field_form_body.inc
+files[] = views/webform_handler_field_is_draft.inc
+files[] = views/webform_handler_field_submission_count.inc
+files[] = views/webform_handler_field_submission_link.inc
+files[] = views/webform_handler_filter_is_draft.inc
+files[] = views/webform.views.inc
+
+files[] = tests/components.test
+files[] = tests/permissions.test
+files[] = tests/submission.test
+files[] = tests/webform.test
+
+; Information added by drupal.org packaging script on 2010-10-20
+version = "7.x-3.4-beta1"
+core = "7.x"
+project = "webform"
+datestamp = "1287598574"
+

@@ -1,0 +1,8 @@
+<?php
+// $Id: breadcrumb_test.module,v 1.1 2010/12/07 19:12:36 sun Exp $
+
+/**
+ * @file
+ * Testing functionality for Breadcrumb module.
+ */
+

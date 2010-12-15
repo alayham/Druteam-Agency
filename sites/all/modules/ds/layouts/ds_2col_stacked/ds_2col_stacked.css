@@ -1,0 +1,19 @@
+/* $Id: ds_2col_stacked.css,v 1.1.2.2 2010/10/31 00:13:39 swentel Exp $ */
+
+.group-header {
+
+}
+
+.group-left {
+  float: left;
+  width: 50%;
+}
+
+.group-right {
+  float: right;
+  width: 50%;
+}
+
+.group-footer {
+  clear: both;
+}

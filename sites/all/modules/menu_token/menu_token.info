@@ -1,0 +1,11 @@
+; $Id: menu_token.info,v 1.1 2009/01/01 00:40:33 develCuy Exp $
+name = Menu Token
+description = "Provides tokens in menu items(links)."
+dependencies = token
+
+; Information added by drupal.org packaging script on 2010-11-03
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "menu_token"
+datestamp = "1288743247"
+

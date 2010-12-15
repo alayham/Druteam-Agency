@@ -1,0 +1,14 @@
+; $Id: libraries_test.info,v 1.1 2010/07/16 10:53:04 sun Exp $
+name = Libraries test module
+description = Tests library detection and loading.
+core = 7.x
+dependencies[] = libraries
+files[] = libraries_test.module
+hidden = TRUE
+
+; Information added by drupal.org packaging script on 2010-12-04
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "libraries"
+datestamp = "1291421823"
+

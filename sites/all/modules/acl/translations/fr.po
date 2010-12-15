@@ -1,0 +1,87 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: French ACL\n"
+"POT-Creation-Date: 2010-06-13 18:43+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Frederic G. MARAND <fgm@osinet.fr>\n"
+"Language-Team: OSInet <support@osinet.fr>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n>1);\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: acl.admin.inc:50
+msgid "Remove Checked"
+msgstr "Supprimer les valeurs cochées"
+
+#: acl.admin.inc:56
+msgid "Add user"
+msgstr "Ajouter un utilisateur"
+
+#: acl.admin.inc:64
+msgid "Add User"
+msgstr "Ajouter un Utilisateur"
+
+#: acl.admin.inc:101
+msgid "Invalid user specified."
+msgstr "Utilisateur spécifié invalide."
+
+#: acl.admin.inc:111
+msgid "Current users"
+msgstr "Utilisateurs actuels"
+
+#: acl.info:0
+msgid "ACL"
+msgstr "ACL"
+
+#: acl.info:0
+msgid "Access control list API. Has no features on its own."
+msgstr "API de liste de contrôle d'accès. Ne fournit aucune fonctionnalité par lui-même."
+
+#: acl.info:0
+msgid "Access control"
+msgstr "Contrôle d'accès"
+
+#~ msgid "acl"
+#~ msgstr "acl"
+#~ msgid "The base Access Control Lists table."
+#~ msgstr "La table de base des listes de contrôle d'accès"
+#~ msgid "Primary key: unique ACL ID."
+#~ msgstr "Clef primaire: l'identifiant unique d'ACL"
+#~ msgid "The name of the module that created this ACL entry."
+#~ msgstr "Le nom du module qui a créé cette entrée d'ACL."
+#~ msgid ""
+#~ "A name (or other identifying information) for this ACL entry, given by "
+#~ "the module that created it."
+#~ msgstr ""
+#~ "Un nom (ou toute autre forme d'identification) pour cette entrée d'ACL, "
+#~ "donné par le module qui l'a créée."
+#~ msgid "Identifies {users} to which the referenced {acl} entry applies."
+#~ msgstr ""
+#~ "Identifie les {users} auxquels l'entrée d'{acl} référencée s'applique."
+#~ msgid "The {acl}.acl_id of the entry."
+#~ msgstr "L'{acl}.acl_id de l'entrée."
+#~ msgid "The {user}.uid to which this {acl} entry applies."
+#~ msgstr "Le {users}.uid auquel cette entrée d'{acl} s'applique."
+#~ msgid ""
+#~ "Identifies {node}s to which the referenced {acl} entry applies and "
+#~ "defines the permissions granted."
+#~ msgstr ""
+#~ "Identifie le(s) {node}s au(x)quel(s) l'entrée d'{acl} référencée "
+#~ "s'applique, et définit les droits qu'elle accorde."
+#~ msgid "The {node}.nid to grant permissions for."
+#~ msgstr "Le {node}.nid auquel des droits sont donnés."
+#~ msgid "Whether to grant \"view\" permission."
+#~ msgstr "Donner ou non le droit \"voir\"."
+#~ msgid "Whether to grant \"update\" permission."
+#~ msgstr "Donner ou non le droit \"modifier\"."
+#~ msgid "Whether to grant \"delete\" permission."
+#~ msgstr "Donner ou non le droit \"supprimer\"."
+#~ msgid "The priority of this grant record (for hook_node_access_records())."
+#~ msgstr ""
+#~ "La priorité de cet enregistrement de droits (pour hook_node_access_records"
+#~ "())."
+

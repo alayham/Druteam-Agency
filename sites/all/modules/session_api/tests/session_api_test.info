@@ -1,0 +1,16 @@
+; $Id: session_api_test.info,v 1.1.2.1 2010/04/30 00:10:17 jhedstrom Exp $
+name = "Session API test"
+description = "Helper module for Session API testing."
+package = Testing
+version = VERSION
+dependencies[] = session_api
+core = 7.x
+files[] = session_api_test.module
+hidden = TRUE
+
+; Information added by drupal.org packaging script on 2010-11-24
+version = "7.x-1.0-beta1"
+core = "7.x"
+project = "session_api"
+datestamp = "1290565312"
+

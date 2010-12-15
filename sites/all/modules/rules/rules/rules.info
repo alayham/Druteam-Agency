@@ -1,0 +1,42 @@
+; $Id: rules.info,v 1.1.4.14 2010/09/07 12:13:38 fago Exp $
+name = Rules
+description = React on events and conditionally evaluate actions.
+package = Rules
+core = 7.x
+files[] = tests/rules.test
+files[] = includes/rules.core.inc
+files[] = includes/rules.processor.inc
+files[] = includes/rules.plugins.inc
+files[] = includes/rules.state.inc
+files[] = rules.module
+files[] = rules.rules.inc
+files[] = modules/data.eval.inc
+files[] = modules/data.rules.inc
+files[] = modules/events.inc
+files[] = modules/node.eval.inc
+files[] = modules/node.rules.inc
+files[] = modules/path.eval.inc
+files[] = modules/path.rules.inc
+files[] = modules/php.eval.inc
+files[] = modules/php.rules.inc
+files[] = modules/rules_core.eval.inc
+files[] = modules/rules_core.rules.inc
+files[] = modules/system.eval.inc
+files[] = modules/system.rules.inc
+files[] = modules/taxonomy.rules.inc
+files[] = modules/user.eval.inc
+files[] = modules/user.rules.inc
+files[] = ui/ui.core.inc
+files[] = ui/ui.data.inc
+files[] = ui/ui.forms.inc
+files[] = ui/ui.plugins.inc
+files[] = ui/ui.theme.inc
+dependencies[] = entity_metadata
+dependencies[] = entity
+
+; Information added by drupal.org packaging script on 2010-12-06
+version = "7.x-2.0-alpha3"
+core = "7.x"
+project = "rules"
+datestamp = "1291637070"
+
